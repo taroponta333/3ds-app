@@ -1,0 +1,27 @@
+name: Build 3DS App
+
+on: [push] # ファイルが更新（push）されたら自動起動
+
+jobs:
+  build_3ds:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. あなたのコードをクラウド上にダウンロード
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. 3DS開発環境（devkitPro）が入ったコンテナを用意してコンパイル
+      - name: Build in devkitPro container
+        uses: docker://devkitpro/devkitarm:latest
+        env:
+          DEVKITPRO: /opt/devkitpro
+          DEVKITARM: /opt/devkitpro/devkitARM
+        with:
+          args: make
+
+      # 3. 出来上がった「.3dsx」ファイルを保存してダウンロードできるようにする
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: 3ds-app-file
+          path: "*.3dsx"
