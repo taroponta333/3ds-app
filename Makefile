@@ -13,7 +13,7 @@ include $(DEVKITARM)/3ds_rules
 all: $(TARGET).3dsx
 
 $(TARGET).3dsx: $(BUILD)/$(TARGET).elf
-	$(3DSXTOOL) $(BUILD)/$(TARGET).elf $(TARGET).3dsx
+	3dsxtool $(BUILD)/$(TARGET).elf $(TARGET).3dsx
 
 $(BUILD)/$(TARGET).elf: main.c
 	@mkdir -p $(BUILD)
