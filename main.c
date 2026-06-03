@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 
-// メモの最大保存数と文字数
+// メモの最大保存数と文字数（日本語対応のため64に拡張）
 #define MAX_MEMOS 5
-#define MEMO_LENGTH 32
+#define MEMO_LENGTH 64
 
 int main(int argc, char* argv[])
 {
@@ -54,11 +54,6 @@ int main(int argc, char* argv[])
         u8 isCharging = 0;
         PTMU_GetBatteryChargeState(&isCharging);
         printf("\x1b[4;1HStatus: %s", isCharging ? "Charging" : "Discharging");
-
-        // 本体の温度取得（大まかなステータス）
-        u8 batteryTemp = 0;
-        // ※より詳細なハードウェア情報を取るためのプレースホルダー
-        printf("\x1b[6;1HSystem Status: Stable");
         
         printf("\x1b[10;1H[START] : Exit App");
 
@@ -88,7 +83,7 @@ int main(int argc, char* argv[])
             selectedMemo = (selectedMemo - 1 + MAX_MEMOS) % MAX_MEMOS;
         }
         if (kDown & KEY_A) {
-            // Aボタンで選択中のメモをクリア（またはデフォルトに戻す）
+            // Aボタンで選択中のメモをクリア
             strncpy(memos[selectedMemo], "Cleared (Empty)", MEMO_LENGTH);
         }
 
