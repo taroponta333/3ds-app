@@ -12,9 +12,12 @@ include $(DEVKITARM)/3ds_rules
 
 all: $(TARGET).3dsx
 
-$(TARGET).3dsx: $(TARGET).elf
+$(TARGET).3dsx: $(BUILD)/$(TARGET).elf
+	$(3DSXTOOL) $(BUILD)/$(TARGET).elf $(TARGET).3dsx
 
-$(TARGET).elf: main.c
+$(BUILD)/$(TARGET).elf: main.c
 	@mkdir -p $(BUILD)
 	$(CC) -g -Wall -O2 -mfloat-abi=hard -mcpu=mpcore -mtune=mpcore -specs=3dsx.specs main.c $(LIBS) -I$(DEVKITPRO)/libctru/include -L$(DEVKITPRO)/libctru/lib -o $(BUILD)/$(TARGET).elf
-	$(3DSXTOOL) $(BUILD)/$(TARGET).elf $(TARGET).3dsx
+
+clean:
+	rm -rf $(BUILD) $(TARGET).3dsx
