@@ -11,6 +11,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # 【修正】makerom をダウンロードして実行可能にするステップを追加
+      - name: Install makerom
+        run: |
+          apt-get update && apt-get install -y wget
+          wget https://github.com -O /usr/local/bin/makerom
+          chmod +x /usr/local/bin/makerom
+
       - name: Build homebrew
         run: |
           make
@@ -18,7 +25,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: 3ds-playcoins-app
+          name: 3ds-mp4-player
           path: |
             *.3dsx
             *.cia
