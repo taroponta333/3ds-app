@@ -1,0 +1,33 @@
+BasicInfo:
+  Title                   : "MP4 Player"
+  CompanyCode             : "00"
+  ProductCode             : "CTR-P-MP4P"
+  ContentType             : Application
+  Logo                    : Nintendo
+
+TitleInfo:
+  Category                : Application
+  UniqueId                : 0x12346
+
+SystemControlInfo:
+  SaveDataSize            : 512KB # 必要に応じて変更
+  RemasterVersion         : 0
+  StackSize               : 0x4000
+  # 【重要】旧3DSで利用可能なメモリを最大（72MB）まで拡張する設定
+  CoreVersion             : 2
+  AppType                 : RegularApplication
+  MemType                 : Prod
+
+AccessControlInfo:
+  FileSystemAccess:
+    - DirectSdmc          # SDカードから動画ファイルを読み込むために必須
+  
+  # 【重要】New3DSで実行した際、自動的にCPUを804MHz（高速モード）にクロックアップする設定
+  New3dsSystemMode        : Legacy # 64MBメモリモード（高速化のみ有効化）
+
+  ServiceAccessControl:
+    - apt:u
+    - gsp::Gpu
+    - ndsp::u             # 音声出力用
+    - hid:USER
+    - fs:USER
